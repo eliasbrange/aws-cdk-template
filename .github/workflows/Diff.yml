@@ -1,0 +1,41 @@
+name: DevDeploy
+
+on:
+  pull_request:
+
+jobs:
+  diff-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/diff
+        with:
+          environment-name: Dev
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          pipeline-role: ${{ secrets.PIPELINE_ROLE }}
+          deploy-role: ${{ secrets.DEPLOY_ROLE }}
+
+  diff-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/diff
+        with:
+          environment-name: Stage
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          pipeline-role: ${{ secrets.PIPELINE_ROLE }}
+          deploy-role: ${{ secrets.DEPLOY_ROLE }}
+
+  diff-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/diff
+        with:
+          environment-name: Prod
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          pipeline-role: ${{ secrets.PIPELINE_ROLE }}
+          deploy-role: ${{ secrets.DEPLOY_ROLE }}
