@@ -16,4 +16,5 @@ class TemplateStack(core.Stack):
             index="handler.py",
             handler="handler",
             runtime=aws_lambda.Runtime.PYTHON_3_9,
+            memory_size=256,
         )
